@@ -141,21 +141,42 @@ class Steps() {
      * etc.
      */
     fun show() {
-
+        var stepNum = 1
+        for (step in steps) {
+            print("$stepNum. ")
+            if (step != null) {
+                println("${step.name}")
+            }
+            else {
+                println("")
+            }
+            stepNum++
+        }
     }
 
     /**
      * Return the number of gnomes on steps
      */
     fun gnomeCount(): Int {
-        return 0
+        var gnomeNum = 0
+        for(step in steps) {
+            if (step != null)
+                gnomeNum++
+        }
+        return gnomeNum
     }
 
     /**
      * Place a given gnome on the given step (1-5)
      */
     fun placeGnome(step: Int, gnome: Gnome) {
-
+        if (step in 1..5) {
+            removeGnome(gnome)
+            steps[step - 1] = gnome
+        }
+        else {
+            println("Step does not exist")
+        }
     }
 
     /**
@@ -163,7 +184,22 @@ class Steps() {
      * step number (1-5) if found, or 0 if not
      */
     fun stepNumOfGnome(gnome: Gnome): Int {
-        return 0
+        var stepNum = 1
+        for (step in steps) {
+            if (step == gnome) {
+                break
+            }
+            else {
+                stepNum++
+            }
+        }
+        if (stepNum in 1..5) {
+            return stepNum
+        }
+        else {
+            stepNum = 0
+            return stepNum
+        }
     }
 
     /**
@@ -171,21 +207,34 @@ class Steps() {
      * or null if out of range or empty
      */
     fun gnomeOnStep(stepNum: Int): Gnome? {
-        return null
+        if (steps[stepNum - 1] != null) {
+            return steps[stepNum - 1]
+        }
+        else {
+            return null
+        }
     }
 
     /**
      * Clear any gnomes off the given step (1-5)
      */
     fun clearStep(step: Int) {
-
+        steps[step - 1] = null
     }
 
     /**
      * Remove a given gnome from the steps
      */
     fun removeGnome(gnome: Gnome) {
-
+        var stepNum = 0
+        for (step in steps) {
+            if (step == gnome) {
+                steps[stepNum] = null
+            }
+            else {
+                stepNum++
+            }
+        }
     }
 }
 
